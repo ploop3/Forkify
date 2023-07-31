@@ -1,13 +1,13 @@
 class SearchView {
-  #partentEl = document.querySelector('.search');
+  _partentEl = document.querySelector('.search');
 
-  #clearInput() {
-    this.#partentEl.querySelector('.search__field').value = '';
+  _clearInput() {
+    this._partentEl.querySelector('.search__field').value = '';
   }
 
   getQuery() {
-    const query = this.#partentEl.querySelector('.search__field').value;
-    this.#clearInput();
+    const query = this._partentEl.querySelector('.search__field').value;
+    this._clearInput();
     return query;
   }
 
@@ -17,7 +17,7 @@ class SearchView {
    * otherwise the page will reload
    */
   addHandlerSearch(handler) {
-    this.#partentEl.addEventListener('submit', function (e) {
+    this._partentEl.addEventListener('submit', function (e) {
       e.preventDefault();
       handler();
     });
