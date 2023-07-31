@@ -1,5 +1,6 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
+import searchView from './views/searchView.js';
 
 //For Polyfiling
 import 'core-js/stable';
@@ -26,18 +27,27 @@ const controlRecipes = async function () {
     // 2. Rendering recipe
     recipeView.render(model.state.recipe);
   } catch (error) {
-    alert(error);
+    recipeView.renderError();
   }
 };
 
-/**
- * Each recipe has a hash ID.
- * This are the listener for loading the recipe on lod and ifthe hash change in the URL
- */
+const controlSearchResults = async function () {
+  try {
+    //1. Get search query
+    const query = searchView.getQuery();
+    if (!query) return;
 
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipes)
-);
+    //2. Load search
+    await model.loadSearchResults(query);
+    console.log(model.state.search.results);
+    //3. Render results
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-// window.addEventListener('hashchange', controlRecipes);
-// window.addEventListener('load', controlRecipes);
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
+};
+init();
