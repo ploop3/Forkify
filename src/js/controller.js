@@ -3,6 +3,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
+import bookmarksView from './views/bookmarksView.js';
 
 //For Polyfiling
 import 'core-js/stable';
@@ -27,6 +28,7 @@ const controlRecipes = async function () {
     //0. Update results view to highlight selected search result
     // if it is the same as the currently loaded hash
     resultsView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
 
     // 1. Loading recipe
     await model.loadRecipe(id);
@@ -50,7 +52,7 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     //3. Render results
-    resultsView.render(model.getSearchResultsPage());
+    resultsView.render(model.getSearchResultsPage(), true);
 
     //4. Render initial pagination buttons
     paginationView.render(model.state.search);
@@ -76,12 +78,18 @@ const controlServings = function (newServings) {
 };
 
 const controlAddBookmark = function () {
+  // 1. Add/remove bookmark
   if (!model.state.recipe.bookmarked) {
     model.addBookmark(model.state.recipe);
   } else {
     model.deleteBookmark(model.state.recipe.id);
   }
+
+  //2. Update reicpe view
   recipeView.update(model.state.recipe);
+
+  //3. Render bookmarks view
+  bookmarksView.render(model.state.bookmarks);
 };
 
 const init = function () {
