@@ -14,9 +14,13 @@ class ResultsView extends View {
   }
 
   _generateMarkupPreview(result) {
+    //Highlight the selected recipe by comparing if it is the same as the hash
+    const id = window.location.hash.slice(1);
     return `
     <li class="preview">
-      <a class="preview__link" href="#${result.id}">
+      <a class="preview__link ${
+        result.id === id ? 'preview__link--active' : ''
+      }" href="#${result.id}">
         <figure class="preview__fig">
           <img src="${result.image}" alt="${result.title}" />
         </figure>
