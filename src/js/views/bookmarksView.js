@@ -8,6 +8,10 @@ class BookmarksView extends View {
   _errorMessage = 'No bookmarks yet. Find a nice recipe and bookmark it :)';
   _message = '';
 
+  addHandlerRender(handler) {
+    window.addEventListener('load', handler);
+  }
+
   _generateMarkup() {
     //_data is an array with the bookmarks
     //Using .render only to return the string, without adding it to the DOM
