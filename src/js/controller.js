@@ -8,13 +8,8 @@ import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 
 //For Polyfiling
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
-//Parcel Hot module reloading
-if (module.hot) {
-  module.hot.accept();
-}
+// import 'core-js/stable';
+// import 'regenerator-runtime/runtime';
 
 /**
  * Loading a recipe from the API
@@ -107,7 +102,6 @@ const controlAddRecipe = async function (newRecipe) {
 
     //1. Upload recipe data
     await model.uploadRecipe(newRecipe);
-    console.log(model.state.recipe);
 
     //2. Render recipe
     recipeView.render(model.state.recipe);
